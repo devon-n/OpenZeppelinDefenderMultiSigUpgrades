@@ -1,15 +1,14 @@
-# Basic Sample Hardhat Project
+# Using Open Zeppelin Defender to upgrade contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This code deploys a simple contract and upgrades it 3 times.
 
-Try running some of the following tasks:
+The first time is with hardhat upgrades
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+We then transfer the contract ownership to a multisig wallet in .env file
+
+The second upgrade sends a proposal to Open Zeppelin defender for other signers to approve
+
+```
+npm i
+npx hardhat run scripts/deployAndUpgrade.js
 ```

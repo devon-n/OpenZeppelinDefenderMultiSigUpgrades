@@ -1,4 +1,4 @@
-const { ethers, upgrades } = require("hardhat")
+const { ethers, upgrades, defender } = require("hardhat")
 
 let boxAddress
 
@@ -33,7 +33,17 @@ async function transferToMultiSig() {
 
 }
 
-//  Use defender and gnosis safe to upgrade the contract to V3 after transferring ownership to the mutli sig address
+//  You can use the defender site to propose an upgrade or run the function below
+
+async function proposeUpgrade() {
+
+  const BoxV3 = await ethers.getContractFactory("BoxV3")
+  console.log("Preparing proposal...")
+
+  const proposal = await defender.proposeUpgrade(boxAddress, BoxV3, { title: "Upgrade to V3" })
+  console.log("upgrade proposal created at: ", proposal.url)
+
+}
 
 deploy()
   .then(() => process.exit(0))
@@ -50,6 +60,13 @@ upgrade()
   })
 
 transferToMultiSig()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error)
+    process.exit(1)
+  })
+  
+proposeUpgrade()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error)
